@@ -9,6 +9,10 @@
     pip install numpy
     pip install PyQt5
 
+Для создания исполняемого файла прописать в папке VKR_GUI, предварительно установив pyinstaller:
+    
+    pyinstaller main.py
+
 ## Входная информация
 
     m - кол-во строк
