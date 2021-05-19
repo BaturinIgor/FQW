@@ -1,17 +1,12 @@
-import time
-import tracemalloc
-
 import numpy as np
-from PyQt5 import QtCore, Qt, QtWidgets
-from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QFileDialog
-
 import matrixTransformation
 import singularAnalysis
-from alignDelegate import AlignDelegate
-
 import printResults
-from time import clock
 
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QMessageBox, QTableWidgetItem, QFileDialog
+from alignDelegate import AlignDelegate
+from time import clock
 
 start_time = 0
 
@@ -59,15 +54,15 @@ def reading_data(ui_MainWindow):
     vector = [0.0] * m
 
     file_results.write("Размерность исходной матрицы: " + str(m) + "x" + str(n) + ".\n")
-    accuracy = int(ui_MainWindow.accuracyInput.text())
+
+    if ui_MainWindow.accuracyInput.text() != "":
+        accuracy = int(ui_MainWindow.accuracyInput.text())
+    else:
+        warning_window("Введите значение точности")
+        return
     file_results.write("Точность расчётов: " + str(accuracy) + " знаков после запятой.\n")
     if accuracy <= 1:
-        warning_accuracy_number = QMessageBox()
-        warning_accuracy_number.setWindowTitle("Ошибка")
-        warning_accuracy_number.setText("Значение точности должно быть больше 1!")
-        warning_accuracy_number.setIcon(QMessageBox.Warning)
-        warning_accuracy_number.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-        warning_accuracy_number.exec_()
+        warning_window("Значение точности должно быть больше 1!")
     else:
         try:
             for i in range(0, m):
@@ -77,12 +72,7 @@ def reading_data(ui_MainWindow):
                         value = float(item.text())
                         original_matrix[i][j] = value
                     else:
-                        warning_accuracy_number = QMessageBox()
-                        warning_accuracy_number.setWindowTitle("Ошибка")
-                        warning_accuracy_number.setText("Заполните матрицу")
-                        warning_accuracy_number.setIcon(QMessageBox.Warning)
-                        warning_accuracy_number.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-                        warning_accuracy_number.exec_()
+                        warning_window("Заполните матрицу")
                         return
             original_matrix = np.array(original_matrix)
             file_results.write("Исходная матрица:\n" + str(original_matrix) + "\n")
@@ -108,12 +98,7 @@ def reading_data(ui_MainWindow):
             file_results.write("\nЗатраченное время: " + str(time) + " сек")
             file_results.write("\nЗатраченная память: " + str(memory / 1024) + " Кб")
         except ValueError:
-            warning_accuracy_number = QMessageBox()
-            warning_accuracy_number.setWindowTitle("Ошибка")
-            warning_accuracy_number.setText("Введите корректные числа в матрице!")
-            warning_accuracy_number.setIcon(QMessageBox.Warning)
-            warning_accuracy_number.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
-            warning_accuracy_number.exec_()
+            warning_window("Введите корректные числа в матрице!")
 
 
 def data_processing(ui_MainWindow, original_matrix, vector, m, accuracy):
@@ -180,3 +165,12 @@ def print_initial_data(ui_MainWindow, dimension, accuracy, original_matrix, vect
 
 def close_window(MainWindow):
     MainWindow.close()
+
+
+def warning_window(text):
+    warning_accuracy_number = QMessageBox()
+    warning_accuracy_number.setWindowTitle("Ошибка")
+    warning_accuracy_number.setText(text)
+    warning_accuracy_number.setIcon(QMessageBox.Warning)
+    warning_accuracy_number.setStandardButtons(QMessageBox.Ok | QMessageBox.Cancel)
+    warning_accuracy_number.exec_()

@@ -1,13 +1,11 @@
 from time import clock
-
 from PyQt5 import QtCore
 from PyQt5.QtGui import QBrush, QColor
 from PyQt5.QtWidgets import QTableWidgetItem
+from alignDelegate import AlignDelegate
 
 import matrixTransformation
 import singularAnalysis
-from alignDelegate import AlignDelegate
-
 import numpy as np
 import solveSVD
 
