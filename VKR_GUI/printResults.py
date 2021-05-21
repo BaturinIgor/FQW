@@ -5,7 +5,6 @@ from PyQt5.QtWidgets import QTableWidgetItem
 from alignDelegate import AlignDelegate
 
 import matrixTransformation
-import singularAnalysis
 import numpy as np
 import solveSVD
 
@@ -139,7 +138,8 @@ def print_trial_solutions(ui_MainWindow, original_matrix, vector, accuracy, file
     printed_solutions = 0
     if len(trial_solutions) != printed_solutions:
         file_results.write("\nПробное решение 1:\n" +
-                           str(trial_solutions[0]))
+                           str(trial_solutions[0]) +
+                           "\n")
         norm, fault, acc = solveSVD.accuracy_solution(original_matrix, trial_solutions[0], vector, file_results)
         norm_vector.append(norm)
         print_vector_trial_solution(ui_MainWindow.trialSolution, trial_solutions[0],
@@ -162,7 +162,8 @@ def print_trial_solutions(ui_MainWindow, original_matrix, vector, accuracy, file
     printed_solutions += 1
     if len(trial_solutions) != printed_solutions:
         file_results.write("\nПробное решение 2:\n" +
-                           str(trial_solutions[1]))
+                           str(trial_solutions[1]) +
+                           "\n")
         norm, fault, acc = solveSVD.accuracy_solution(original_matrix, trial_solutions[1], vector, file_results)
         norm_vector.append(norm)
         print_vector_trial_solution(ui_MainWindow.trialSolution2, trial_solutions[1],
@@ -183,7 +184,8 @@ def print_trial_solutions(ui_MainWindow, original_matrix, vector, accuracy, file
     printed_solutions += 1
     if len(trial_solutions) != printed_solutions:
         file_results.write("\nПробное решение 3:\n" +
-                           str(trial_solutions[2]))
+                           str(trial_solutions[2]) +
+                           "\n")
         norm, fault, acc = solveSVD.accuracy_solution(original_matrix, trial_solutions[2], vector, file_results)
         norm_vector.append(norm)
         print_vector_trial_solution(ui_MainWindow.trialSolution3, trial_solutions[2],
@@ -202,7 +204,8 @@ def print_trial_solutions(ui_MainWindow, original_matrix, vector, accuracy, file
     printed_solutions += 1
     if len(trial_solutions) != printed_solutions:
         file_results.write("\nПробное решение 4:\n" +
-                           str(trial_solutions[3]))
+                           str(trial_solutions[3]) +
+                           "\n")
         norm, fault, acc = solveSVD.accuracy_solution(original_matrix, trial_solutions[3], vector, file_results)
         norm_vector.append(norm)
         print_vector_trial_solution(ui_MainWindow.trialSolution4, trial_solutions[3],
@@ -219,7 +222,8 @@ def print_trial_solutions(ui_MainWindow, original_matrix, vector, accuracy, file
     printed_solutions += 1
     if len(trial_solutions) != printed_solutions:
         file_results.write("\nПробное решение 5:\n" +
-                           str(trial_solutions[4]))
+                           str(trial_solutions[4]) +
+                           "\n")
         norm, fault, acc = solveSVD.accuracy_solution(original_matrix, trial_solutions[4], vector, file_results)
         norm_vector.append(norm)
         print_vector_trial_solution(ui_MainWindow.trialSolution5, trial_solutions[4],
@@ -234,7 +238,8 @@ def print_trial_solutions(ui_MainWindow, original_matrix, vector, accuracy, file
     printed_solutions += 1
     if len(trial_solutions) != printed_solutions:
         file_results.write("\nПробное решение 6:\n" +
-                           str(trial_solutions[5]))
+                           str(trial_solutions[5]) +
+                           "\n")
         norm, fault, acc = solveSVD.accuracy_solution(original_matrix, trial_solutions[5], vector, file_results)
         norm_vector.append(norm)
         print_vector_trial_solution(ui_MainWindow.trialSolution6, trial_solutions[5],
@@ -373,7 +378,8 @@ def print_data_to_file(original_matrix, vector, accuracy, dimension):
     file_results.write("\nМинимальное значение в векторе YNorm - минимальное значение нормы невязки: " +
                        str(min_norm_vector))
     file_results.write("\nНаилучшее решение: пробное решение с нормой невязки " + str(min_norm_vector))
-    time = clock() - start_time
+    time = matrixTransformation.rounding_number(clock() - start_time, accuracy + 3)
     memory = len(original_matrix) * len(original_matrix[0]) * 6 * 16 + len(original_matrix[0]) * 17 * 16 + 13 * 16
+    matrixTransformation.rounding_number(memory / 1024, accuracy + 3)
     file_results.write("\nЗатраченное время: " + str(time) + " сек")
     file_results.write("\nЗатраченная память: " + str(memory / 1024) + " Кб")

@@ -4,7 +4,6 @@ from PyQt5.QtGui import QBrush, QColor
 from PyQt5.QtWidgets import QTableWidgetItem
 
 import matrixTransformation
-import solveSVD
 from alignDelegate import AlignDelegate
 
 

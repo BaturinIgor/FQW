@@ -86,15 +86,15 @@ def reading_data(ui_MainWindow):
 
             s = printResults.print_solve(ui_MainWindow, original_matrix, vector, accuracy, file_results)
             ui_MainWindow.mainWidget.setCurrentWidget(ui_MainWindow.results)
-            w, vectorP, norm_vector, trial_solutions = printResults.print_trial_solutions(ui_MainWindow, original_matrix, vector, accuracy, file_results)
-            singularAnalysis.print_vector_G(ui_MainWindow, w, len(trial_solutions), file_results)
+            g, vectorP, norm_vector, trial_solutions = printResults.print_trial_solutions(ui_MainWindow, original_matrix, vector, accuracy, file_results)
+            singularAnalysis.print_vector_G(ui_MainWindow, g, len(trial_solutions), file_results)
             singularAnalysis.print_vector_NSRCSS(ui_MainWindow, norm_vector, m, len(trial_solutions), accuracy, file_results)
             singularAnalysis.print_vector_P(ui_MainWindow, len(trial_solutions), vectorP, accuracy, s, file_results)
             singularAnalysis.print_vectors_RYNorm(ui_MainWindow, norm_vector, trial_solutions, accuracy, file_results)
-            time = matrixTransformation.rounding_number(clock() - start_time, accuracy)
-            ui_MainWindow.timeResult.setText(str(matrixTransformation.rounding_number(time, accuracy)) + " сек")
+            time = matrixTransformation.rounding_number(clock() - start_time, accuracy + 3)
+            ui_MainWindow.timeResult.setText(str(time) + " сек")
             memory = len(original_matrix) * len(original_matrix[0]) * 6 * 16 + len(original_matrix[0]) * 17 * 16 + 13 * 16
-            ui_MainWindow.memoryResult.setText(str(matrixTransformation.rounding_number(memory / 1024, accuracy)) + " Кб")
+            ui_MainWindow.memoryResult.setText(str(matrixTransformation.rounding_number(memory / 1024, accuracy + 3)) + " Кб")
             file_results.write("\nЗатраченное время: " + str(time) + " сек")
             file_results.write("\nЗатраченная память: " + str(memory / 1024) + " Кб")
         except ValueError:

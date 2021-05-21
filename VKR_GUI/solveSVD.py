@@ -78,11 +78,11 @@ def accuracy_solution(matrix, vectorX, vectorB, file_results):
     valuesAx = matrix_mult(matrix, vectorX)
     for i in range(0, len(vectorB)):
         norm += (vectorB[i] - valuesAx[i]) ** 2
-
-        if abs(vectorB[i]) > abs(valuesAx[i]):
-            acc += abs(valuesAx[i] / vectorB[i])
-        else:
-            acc += abs(vectorB[i] / valuesAx[i])
+        if vectorB[i] != 0.0 or valuesAx[i] != 0.0:
+            if abs(vectorB[i]) > abs(valuesAx[i]):
+                acc += abs(valuesAx[i] / vectorB[i])
+            else:
+                acc += abs(vectorB[i] / valuesAx[i])
     acc /= len(vectorB)
     fault = 1 - acc
 
