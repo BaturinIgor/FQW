@@ -17,7 +17,7 @@ def generate_matrix(ui_MainWindow):
     n = int(current_size[2])
     ui_MainWindow.matrixCoefficients.setRowCount(m)
     ui_MainWindow.matrixCoefficients.setColumnCount(n)
-    ui_MainWindow.matrixCoefficients.setGeometry(QtCore.QRect(20, 120, n * 90 + 17, m * 40 + 27))
+    ui_MainWindow.matrixCoefficients.setGeometry(QtCore.QRect(20, 130, n * 90 + 17, m * 40 + 27))
     for i in range(0, n):
         for j in range(0, m):
             ui_MainWindow.matrixCoefficients.horizontalHeader().resizeSection(i, 90)
@@ -28,11 +28,11 @@ def generate_matrix(ui_MainWindow):
     delegate = AlignDelegate(ui_MainWindow.matrixCoefficients)
     ui_MainWindow.matrixCoefficients.setItemDelegate(delegate)
 
-    ui_MainWindow.vectorCoeffLabel.setGeometry(QtCore.QRect(n * 90 + 50, 100, 141, 16))
+    ui_MainWindow.vectorCoeffLabel.setGeometry(QtCore.QRect(n * 90 + 50, 110, 141, 16))
 
     ui_MainWindow.vectorCoefficients.setRowCount(m)
     ui_MainWindow.vectorCoefficients.setColumnCount(1)
-    ui_MainWindow.vectorCoefficients.setGeometry(QtCore.QRect(n * 90 + 50, 120, 117, m * 40 + 27))
+    ui_MainWindow.vectorCoefficients.setGeometry(QtCore.QRect(n * 90 + 50, 130, 117, m * 40 + 27))
     for i in range(0, m):
         ui_MainWindow.vectorCoefficients.horizontalHeader().resizeSection(1, 90)
         ui_MainWindow.vectorCoefficients.verticalHeader().resizeSection(i, 40)
@@ -41,7 +41,7 @@ def generate_matrix(ui_MainWindow):
     delegate = AlignDelegate(ui_MainWindow.vectorCoefficients)
     ui_MainWindow.vectorCoefficients.setItemDelegate(delegate)
 
-    ui_MainWindow.solveButton.setGeometry(QtCore.QRect(n * 90 + 60, m * 40 + 155, 100, 25))
+    ui_MainWindow.solveButton.setGeometry(QtCore.QRect(n * 90 + 60, m * 40 + 165, 100, 25))
 
 
 def reading_data(ui_MainWindow):

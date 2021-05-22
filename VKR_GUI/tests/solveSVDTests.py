@@ -84,6 +84,32 @@ class SolveSVDTests(unittest.TestCase):
                              [0.28779, -0.19333, 0.06148, 0.80822, -0.40249, -0.2466],
                              [0.86907, -0.31396, -0.13562, -0.2905, 0.04338, 0.20366]])
 
+    matrix_U_2x2 = np.array([[-0.52573, -0.85065],
+                             [-0.85065,  0.52573]])
+    matrix_U_3x3 = np.array([[-0.5352,  -0.69825, -0.47539],
+                             [-0.39518, -0.29043,  0.87148],
+                             [-0.74659,  0.65429, -0.12049]])
+    matrix_U_4x4 = np.array([[-0.45081, -0.43696,  0.68039, -0.37804],
+                             [-0.32255, -0.31931,  0.07459,  0.88794],
+                             [-0.60745, -0.25633, -0.70788, -0.25337],
+                             [-0.56898,  0.80088,  0.17439,  0.06667]])
+    matrix_U_4x2 = np.array([[-0.47798,  0.74491, -0.09764, -0.4551 ],
+                             [-0.65563, -0.41353, -0.61522,  0.14372],
+                             [-0.55351, -0.29929,  0.77363, -0.07453],
+                             [-0.18793,  0.42957,  0.11608,  0.8756 ]])
+    matrix_U_5x5 = np.array([[-0.41446,  0.44889,  0.56086, -0.36224,  0.42537],
+                             [-0.41101, -0.24705,  0.39363, -0.13388, -0.77277],
+                             [-0.61537, -0.63158, -0.17682,  0.13571,  0.41563],
+                             [-0.37744,  0.47536, -0.06321,  0.78319, -0.11911],
+                             [-0.37169,  0.33556, -0.70373, -0.46803, -0.18696]])
+    matrix_U_6x6 = np.array([[-0.29943, -0.51414,  0.6174,  -0.11616,  0.48654, -0.12088],
+                             [-0.41972, -0.40034, -0.39785,  0.00336, -0.33187, -0.6286 ],
+                             [-0.49179,  0.24656, -0.45042,  0.28746,  0.62932,  0.12571],
+                             [-0.33464,  0.35745, -0.01462, -0.87161, -0.01562,  0.00864],
+                             [-0.50188,  0.4603,   0.49502,  0.37922, -0.37747, -0.07005],
+                             [-0.35841, -0.41827, -0.11136, -0.01852, -0.3382,   0.75463]])
+
+
     norm_2x2 = 0.0
     norm_3x3 = 1.3e-09
     norm_4x4 = 5.3e-08
@@ -152,37 +178,43 @@ class SolveSVDTests(unittest.TestCase):
     file_results = open("test.txt", 'w')
 
     def test_solve_matrix_2x2(self):
-        s, x, V = solveSVD.solve(self.original_matrix_2x2, self.vector_2x1, 5, self.file_results)
+        U, s, x, V = solveSVD.solve(self.original_matrix_2x2, self.vector_2x1, 5, self.file_results)
+        self.assertEqual(str(U), str(self.matrix_U_2x2))
         self.assertEqual(str(s), str(self.vector_s_2x1))
         self.assertEqual(str(x), str(self.vector_x_2x1))
         self.assertEqual(str(V), str(self.matrix_V_2x2))
 
     def test_solve_matrix_3x3(self):
-        s, x, V = solveSVD.solve(self.original_matrix_3x3, self.vector_3x1, 5, self.file_results)
+        U, s, x, V = solveSVD.solve(self.original_matrix_3x3, self.vector_3x1, 5, self.file_results)
+        self.assertEqual(str(U), str(self.matrix_U_3x3))
         self.assertEqual(str(s), str(self.vector_s_3x1))
         self.assertEqual(str(x), str(self.vector_x_3x1))
         self.assertEqual(str(V), str(self.matrix_V_3x3))
 
     def test_solve_matrix_4x4(self):
-        s, x, V = solveSVD.solve(self.original_matrix_4x4, self.vector_4x1, 5, self.file_results)
+        U, s, x, V = solveSVD.solve(self.original_matrix_4x4, self.vector_4x1, 5, self.file_results)
+        self.assertEqual(str(U), str(self.matrix_U_4x4))
         self.assertEqual(str(s), str(self.vector_s_4x1))
         self.assertEqual(str(x), str(self.vector_x_4x1))
         self.assertEqual(str(V), str(self.matrix_V_4x4))
 
     def test_solve_matrix_4x2(self):
-        s, x, V = solveSVD.solve(self.original_matrix_4x2, self.vector_4x2, 5, self.file_results)
+        U, s, x, V = solveSVD.solve(self.original_matrix_4x2, self.vector_4x2, 5, self.file_results)
+        self.assertEqual(str(U), str(self.matrix_U_4x2))
         self.assertEqual(str(s), str(self.vector_s_4x2))
         self.assertEqual(str(x), str(self.vector_x_4x2))
         self.assertEqual(str(V), str(self.matrix_V_4x2))
 
     def test_solve_matrix_5x5(self):
-        s, x, V = solveSVD.solve(self.original_matrix_5x5, self.vector_5x1, 5, self.file_results)
+        U, s, x, V = solveSVD.solve(self.original_matrix_5x5, self.vector_5x1, 5, self.file_results)
+        self.assertEqual(str(U), str(self.matrix_U_5x5))
         self.assertEqual(str(s), str(self.vector_s_5x1))
         self.assertEqual(str(x), str(self.vector_x_5x1))
         self.assertEqual(str(V), str(self.matrix_V_5x5))
 
     def test_solve_matrix_6x6(self):
-        s, x, V = solveSVD.solve(self.original_matrix_6x6, self.vector_6x1, 5, self.file_results)
+        U, s, x, V = solveSVD.solve(self.original_matrix_6x6, self.vector_6x1, 5, self.file_results)
+        self.assertEqual(str(U), str(self.matrix_U_6x6))
         self.assertEqual(str(s), str(self.vector_s_6x1))
         self.assertEqual(str(x), str(self.vector_x_6x1))
         self.assertEqual(str(V), str(self.matrix_V_6x6))

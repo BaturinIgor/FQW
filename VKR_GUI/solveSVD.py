@@ -36,7 +36,7 @@ def solve(matrix, vector, accuracy, file_results):
     x = matrix_mult(V.transpose(), w)
     matrixTransformation.rounding_vector(x, accuracy)
     file_results.write("Полученное решение:\n" + str(x) + "\n\n")
-    return s, x, V
+    return U, s, x, V
 
 
 def calculation_of_trial_solutions(matrix, vector, accuracy):

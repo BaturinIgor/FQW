@@ -10,20 +10,43 @@ import solveSVD
 
 
 def print_solve(ui_MainWindow, original_matrix, vector, accuracy, file_results):
-    s, x, V = solveSVD.solve(original_matrix, vector, accuracy, file_results)
+    U, s, x, V = solveSVD.solve(original_matrix, vector, accuracy, file_results)
+    size_U = len(U)
+    size_s = len(s)
     size_V = len(V)
+
+    # Вывод матрицы U
+    ui_MainWindow.matrixU.setRowCount(size_U)
+    ui_MainWindow.matrixU.setColumnCount(size_U)
+    ui_MainWindow.matrixU.setGeometry(QtCore.QRect(10, 40, size_U * 90 + 17, size_U * 25 + 27))
+
+    ui_MainWindow.matrixU.clear()
+    for i in range(0, size_U):
+        for j in range(0, size_U):
+            ui_MainWindow.matrixU.horizontalHeader().resizeSection(i, 90)
+            ui_MainWindow.matrixU.verticalHeader().resizeSection(j, 25)
+
+            item = QTableWidgetItem()
+            item.setText(str(U[i][j]))
+            item.setFlags(QtCore.Qt.ItemIsEditable)
+            item.setForeground(QBrush(QColor(0, 0, 0)))
+            ui_MainWindow.matrixU.setItem(i, j, item)
+
+    delegate = AlignDelegate(ui_MainWindow.matrixU)
+    ui_MainWindow.matrixU.setItemDelegate(delegate)
 
     # Вывод матрицы V
     V = V.transpose()
     ui_MainWindow.matrixV.setRowCount(size_V)
     ui_MainWindow.matrixV.setColumnCount(size_V)
-    ui_MainWindow.matrixV.setGeometry(QtCore.QRect(10, 40, size_V * 90 + 17, size_V * 40 + 27))
+    ui_MainWindow.matrixVLabel.setGeometry(QtCore.QRect(10, size_U * 25 + 90, 81, 16))
+    ui_MainWindow.matrixV.setGeometry(QtCore.QRect(10, size_U * 25 + 110, size_V * 90 + 17, size_V * 25 + 27))
 
     ui_MainWindow.matrixV.clear()
     for i in range(0, size_V):
         for j in range(0, size_V):
             ui_MainWindow.matrixV.horizontalHeader().resizeSection(i, 90)
-            ui_MainWindow.matrixV.verticalHeader().resizeSection(j, 40)
+            ui_MainWindow.matrixV.verticalHeader().resizeSection(j, 25)
 
             item = QTableWidgetItem()
             item.setText(str(V[i][j]))
@@ -35,15 +58,15 @@ def print_solve(ui_MainWindow, original_matrix, vector, accuracy, file_results):
     ui_MainWindow.matrixV.setItemDelegate(delegate)
 
     # Вывод сингулярных чисел
-    ui_MainWindow.singularValues.setRowCount(size_V)
+    ui_MainWindow.singularValues.setRowCount(size_s)
     ui_MainWindow.singularValues.setColumnCount(1)
-    ui_MainWindow.singularValuesLabel.setGeometry(QtCore.QRect(size_V * 90 + 40, 20, 121, 16))
-    ui_MainWindow.singularValues.setGeometry(QtCore.QRect(size_V * 90 + 40, 40, 107, size_V * 40 + 27))
+    ui_MainWindow.singularValuesLabel.setGeometry(QtCore.QRect(size_U * 90 + 40, 20, 121, 16))
+    ui_MainWindow.singularValues.setGeometry(QtCore.QRect(size_U * 90 + 40, 40, 107, size_s * 25 + 27))
 
     ui_MainWindow.singularValues.clear()
-    for i in range(0, size_V):
+    for i in range(0, size_s):
         ui_MainWindow.singularValues.horizontalHeader().resizeSection(1, 90)
-        ui_MainWindow.singularValues.verticalHeader().resizeSection(i, 40)
+        ui_MainWindow.singularValues.verticalHeader().resizeSection(i, 25)
 
         item = QTableWidgetItem()
         item.setText(str(s[i]))
@@ -57,13 +80,13 @@ def print_solve(ui_MainWindow, original_matrix, vector, accuracy, file_results):
     # Вывод вектора решения
     ui_MainWindow.vectorSolution.setRowCount(size_V)
     ui_MainWindow.vectorSolution.setColumnCount(1)
-    ui_MainWindow.solveVector.setGeometry(QtCore.QRect((size_V + 1) * 90 + 80, 20, 101, 16))
-    ui_MainWindow.vectorSolution.setGeometry(QtCore.QRect((size_V + 1) * 90 + 80, 40, 107, size_V * 40 + 27))
+    ui_MainWindow.solveVector.setGeometry(QtCore.QRect((size_U + 1) * 90 + 80, 20, 101, 16))
+    ui_MainWindow.vectorSolution.setGeometry(QtCore.QRect((size_U + 1) * 90 + 80, 40, 107, size_V * 25 + 27))
 
     ui_MainWindow.vectorSolution.clear()
     for i in range(0, size_V):
         ui_MainWindow.vectorSolution.horizontalHeader().resizeSection(1, 90)
-        ui_MainWindow.vectorSolution.verticalHeader().resizeSection(i, 40)
+        ui_MainWindow.vectorSolution.verticalHeader().resizeSection(i, 25)
 
         item = QTableWidgetItem()
         item.setText(str(x[i]))
@@ -75,32 +98,32 @@ def print_solve(ui_MainWindow, original_matrix, vector, accuracy, file_results):
     ui_MainWindow.vectorSolution.setItemDelegate(delegate)
 
     # Вывод времени и памяти
-    ui_MainWindow.timeLabel.setGeometry(QtCore.QRect(20, size_V * 40 + 80, 161, 16))
-    ui_MainWindow.timeResult.setGeometry(QtCore.QRect(180, size_V * 40 + 80, 101, 16))
-    ui_MainWindow.memoryLabel.setGeometry(QtCore.QRect(20, size_V * 40 + 110, 161, 16))
-    ui_MainWindow.memoryResult.setGeometry(QtCore.QRect(180, size_V * 40 + 110, 101, 16))
+    ui_MainWindow.timeLabel.setGeometry(QtCore.QRect(20, (size_V + size_U) * 25 + 150, 161, 16))
+    ui_MainWindow.timeResult.setGeometry(QtCore.QRect(180, (size_V + size_U) * 25 + 150, 101, 16))
+    ui_MainWindow.memoryLabel.setGeometry(QtCore.QRect(20, (size_V + size_U) * 25 + 180, 161, 16))
+    ui_MainWindow.memoryResult.setGeometry(QtCore.QRect(180, (size_V + size_U) * 25 + 180, 101, 16))
 
     # Вывод ранга, нормы невязки и погрешности
-    ui_MainWindow.rankLabel.setGeometry(QtCore.QRect(310, size_V * 40 + 80, 161, 16))
-    ui_MainWindow.rankResult.setGeometry(QtCore.QRect(470, size_V * 40 + 80, 101, 16))
+    ui_MainWindow.rankLabel.setGeometry(QtCore.QRect(290, (size_V + size_U) * 25 + 150, 161, 16))
+    ui_MainWindow.rankResult.setGeometry(QtCore.QRect(450, (size_V + size_U) * 25 + 150, 161, 16))
     ui_MainWindow.rankResult.setText(str(np.linalg.matrix_rank(original_matrix)))
 
     norm, fault, acc = solveSVD.accuracy_solution(original_matrix, x, vector, file_results)
-    ui_MainWindow.residualNormSquaredLabel.setGeometry(QtCore.QRect(310, size_V * 40 + 110, 161, 16))
-    ui_MainWindow.residualNormSquared.setGeometry(QtCore.QRect(470, size_V * 40 + 110, 101, 16))
+    ui_MainWindow.residualNormSquaredLabel.setGeometry(QtCore.QRect(290, (size_V + size_U) * 25 + 180, 161, 16))
+    ui_MainWindow.residualNormSquared.setGeometry(QtCore.QRect(450, (size_V + size_U) * 25 + 180, 161, 16))
     ui_MainWindow.residualNormSquared.setText(str(norm))
 
-    ui_MainWindow.faultLabel.setGeometry(QtCore.QRect(310, size_V * 40 + 140, 161, 16))
-    ui_MainWindow.faultResult.setGeometry(QtCore.QRect(470, size_V * 40 + 140, 101, 16))
+    ui_MainWindow.faultLabel.setGeometry(QtCore.QRect(560, (size_V + size_U) * 25 + 150, 161, 16))
+    ui_MainWindow.faultResult.setGeometry(QtCore.QRect(720, (size_V + size_U) * 25 + 150, 161, 16))
     ui_MainWindow.faultResult.setText(str(fault))
 
-    ui_MainWindow.accuracyLabel_2.setGeometry(QtCore.QRect(310, size_V * 40 + 170, 161, 16))
-    ui_MainWindow.accuracyResult.setGeometry(QtCore.QRect(470, size_V * 40 + 170, 101, 16))
+    ui_MainWindow.accuracyLabel_2.setGeometry(QtCore.QRect(560, (size_V + size_U) * 25 + 180, 161, 16))
+    ui_MainWindow.accuracyResult.setGeometry(QtCore.QRect(720, (size_V + size_U) * 25 + 180, 161, 16))
     ui_MainWindow.accuracyResult.setText(str(acc) + "%")
 
     # Вывод анализа обусловленности
-    ui_MainWindow.conditionLabel.setGeometry(QtCore.QRect(580, size_V * 40 + 70, 141, 16))
-    ui_MainWindow.conditionDescription.setGeometry(QtCore.QRect(580, size_V * 40 + 90, 231, 347 - size_V * 40))
+    ui_MainWindow.conditionLabel.setGeometry(QtCore.QRect(size_V * 90 + 40, size_U * 25 + 90, 141, 16))
+    ui_MainWindow.conditionDescription.setGeometry(QtCore.QRect(size_V * 90 + 40, size_U * 25 + 110, 231, size_V * 25 + 27))
 
     file_results.write("Число обусловленности: " +
                        str(matrixTransformation.rounding_number(s[size_V - 1] / s[0], accuracy + 3)) + "\n")
@@ -282,6 +305,7 @@ def print_vector_trial_solution(trialSolUi, vector, normSquaredUi, norm, accurac
 
 
 def print_empty_widget(trial_solution, x, norm, accuracy):
+
     trial_solution.setRowCount(0)
     trial_solution.setColumnCount(0)
     trial_solution.setGeometry(QtCore.QRect(x, 40, 107, 267))
@@ -296,7 +320,7 @@ def print_data_to_file(original_matrix, vector, accuracy, dimension):
     file_results.write("Точность расчётов: " + str(accuracy) + " знаков после запятой.\n")
     file_results.write("Исходная матрица:\n" + str(original_matrix) + "\n")
     file_results.write("Вектор правых членов:\n" + str(vector) + "\n")
-    s, x, V = solveSVD.solve(original_matrix, vector, accuracy, file_results)
+    U, s, x, V = solveSVD.solve(original_matrix, vector, accuracy, file_results)
     solveSVD.accuracy_solution(original_matrix, x, vector, file_results)
     if s[len(V) - 1] != 0.0:
         file_results.write("Исходная матрица хорошо обусловлена\n\n")

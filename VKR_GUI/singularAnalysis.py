@@ -29,7 +29,7 @@ def print_vector_G(ui_MainWindow, w, trial_solutions_count, file_results):
     ui_MainWindow.vectorGResult.setItemDelegate(delegate)
 
     ui_MainWindow.vectorGDescription.clear()
-    ui_MainWindow.vectorGDescription.setGeometry(20, trial_solutions_count * 40 + 64, 171, 377 - trial_solutions_count * 40)
+    ui_MainWindow.vectorGDescription.setGeometry(20, trial_solutions_count * 40 + 64, 171, 450 - trial_solutions_count * 40)
     ui_MainWindow.vectorGDescription.append("Анализ вектора G:\n")
     file_results.write("\nАнализ вектора G:\n")
     file_results.write("Вектор G:\n" + str(w) + "\n")
@@ -87,7 +87,7 @@ def print_vector_NSRCSS(ui_MainWindow, norm_vector, m, trial_solutions_count, ac
 
     ui_MainWindow.vectorNSRCSSDescription.clear()
     ui_MainWindow.vectorNSRCSSDescription.setGeometry(200, trial_solutions_count * 40 + 64, 171,
-                                                 377 - trial_solutions_count * 40)
+                                                 450 - trial_solutions_count * 40)
     ui_MainWindow.vectorNSRCSSDescription.append("Анализ вектора N.S.R.C.S.S:\n")
     file_results.write("Анализ вектора N.S.R.C.S.S:\n")
     file_results.write("Вектор N.S.R.C.S.S:\n" + str(NSRCSS) + "\n")
@@ -131,7 +131,7 @@ def print_vector_P(ui_MainWindow, trial_solutions_count, vectorP, accuracy, s, f
 
     ui_MainWindow.vectorPDescription.clear()
     ui_MainWindow.vectorPDescription.setGeometry(380, trial_solutions_count * 40 + 64, 171,
-                                                      377 - trial_solutions_count * 40)
+                                                      450 - trial_solutions_count * 40)
     ui_MainWindow.vectorPDescription.setReadOnly(True)
     ui_MainWindow.vectorPDescription.append("Анализ вектора P:\nСравнение |P| и |acc/s|\n")
     file_results.write("\nАнализ вектора P:\nСравнение |P| и |acc/s|\n")
@@ -200,7 +200,7 @@ def print_vectors_RYNorm(ui_MainWindow, norm_vector, trial_solutions, accuracy, 
 
     ui_MainWindow.vectorNormDescription.clear()
     ui_MainWindow.vectorNormDescription.setGeometry(560, len(trial_solutions) * 40 + 64, 251,
-                                                    377 - len(trial_solutions) * 40)
+                                                    450 - len(trial_solutions) * 40)
     min_norm_vector = min(norm_vector)
     ui_MainWindow.vectorNormDescription.setReadOnly(True)
     file_results.write("Анализ векторов YNorm и RNorm:\n")
